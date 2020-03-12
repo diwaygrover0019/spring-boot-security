@@ -27,11 +27,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("foo").password("foo").roles("ADMIN");*/
 
         // Using H2 database with default schema and creating bunch of users
-        auth.jdbcAuthentication()
+        /*auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .withDefaultSchema()
                 .withUser(User.withUsername("user").password("pass").roles("USER"))
-                .withUser(User.withUsername("admin").password("pass").roles("ADMIN"));
+                .withUser(User.withUsername("admin").password("pass").roles("ADMIN"));*/
+
+        // Using H2 with my schema (refer files schema.sql & data.sql)
+        auth.jdbcAuthentication()
+                .dataSource(dataSource);
+                // if you are not using default table & column names - you can pass queries that Spring Security should run on your tables
+                /*.usersByUsernameQuery("select username,password,enabled from my_users where username = ?")
+                .authoritiesByUsernameQuery("select username,authority from my_authorities where username = ?");*/
     }
 
     @Bean

@@ -2,4 +2,7 @@
 
 This project contains details of set Authentication, Authorization using different data sources
 
-Authentication
+1.  Spring Security with default behaviour overriding default user
+2.  Authentication (in-memory)
+3.  Authorization (in-memory)
+4.  JDBC authentication with H2 database
