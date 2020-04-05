@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("foo").password("foo").roles("ADMIN");*/
 
-        // Using H2 database with default schema and creating bunch of users
+        // Using H2 database with default dataSource & default schema and creating bunch of users
         /*auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .withDefaultSchema()
