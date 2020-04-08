@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,6 +18,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,11 +38,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser(User.withUsername("admin").password("pass").roles("ADMIN"));*/
 
         // Using H2 with my schema (refer files schema.sql & data.sql)
-        auth.jdbcAuthentication()
+        /*auth.jdbcAuthentication()
                 .dataSource(dataSource);
                 // if you are not using default table & column names - you can pass queries that Spring Security should run on your tables
-                /*.usersByUsernameQuery("select username,password,enabled from my_users where username = ?")
+                .usersByUsernameQuery("select username,password,enabled from my_users where username = ?")
                 .authoritiesByUsernameQuery("select username,authority from my_authorities where username = ?");*/
+
+        // Using JPA(UserDetailsService) to connect to dataSource(MySQL)
+        auth.userDetailsService(userDetailsService);
     }
 
     @Bean
